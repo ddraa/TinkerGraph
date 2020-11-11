@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.SQLInvalidAuthorizationSpecException;
 import java.sql.Statement;
@@ -29,11 +30,12 @@ public class EmaillApp {
 		stmt.executeUpdate("USE dbp");
 		stmt.executeUpdate("CREATE OR REPLACE TABLE email (source INTEGER, destination INTEGER)");
 
-
-		
-		
+		PreparedStatement pstmt = connection.prepareStatement("INSERT INTO EMAIL VALUES (?, ?)");
+	
 		BufferedReader r = new BufferedReader(
 				new FileReader("/Users/dragon/data.txt"));
+		long pre = System.currentTimeMillis();
+		int cnt = 0;
 		
 		while(true) {
 			String line = r.readLine();
@@ -48,11 +50,27 @@ public class EmaillApp {
 			int left = Integer.parseInt(arr[0]);
 			int right = Integer.parseInt(arr[1]);
 			
-			stmt.executeUpdate("INSERT INTO email VALUES("+ left +", "+ right +")");
-
-			System.out.println(left + " -> " + right);
+			String sql = "INSERT INTO email VALUES("+left+", "+right+")";
+			//stmt.executeUpdate(sql); -> original
+			
+			
+			/* more faster codes..
+			pstmt.clearParameters();
+			pstmt.setInt(1, left);
+			pstmt.setInt(2, right);
+			pstmt.executeUpdate();
+			*/
+			
+			stmt.addBatch(sql); // even more faster ? throw the batch !
+		
+			System.out.println((System.currentTimeMillis() - pre) + ":" + ++cnt);
+			//System.out.println(left + " -> " + right);
 		}
+		stmt.executeBatch();
+		
 		r.close();
+		stmt.close();
+		connection.close();
 	}
 
 }
