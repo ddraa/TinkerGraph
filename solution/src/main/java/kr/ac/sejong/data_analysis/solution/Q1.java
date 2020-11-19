@@ -19,6 +19,8 @@ public class Q1 {
 		Statement stmt = connection.createStatement();
 		stmt.executeUpdate("CREATE DATABASE IF NOT EXISTS dbp");
 		stmt.executeUpdate("USE dbp");
+		
+		stmt.executeUpdate("CREATE INDEX sourceidx on email (source)");
 
 		// Step1
 		HashSet<Integer> idSet = new HashSet<Integer>();
@@ -47,7 +49,8 @@ public class Q1 {
 			System.out.println(id + " -> " + receiverSet);
 		}
 		System.out.println("ET: " + (System.currentTimeMillis() - pre));
-		// ET: 23263
+		// ET: 10994
+		// INDEX.. : 53
 		stmt.close();
 		connection.close();
 	}
