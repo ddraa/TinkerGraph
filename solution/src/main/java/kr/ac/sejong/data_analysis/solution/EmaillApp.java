@@ -30,10 +30,11 @@ public class EmaillApp {
 		stmt.executeUpdate("USE dbp");
 		stmt.executeUpdate("CREATE OR REPLACE TABLE email (source INTEGER, destination INTEGER)");
 
-		PreparedStatement pstmt = connection.prepareStatement("INSERT INTO EMAIL VALUES (?, ?)");
+		//PreparedStatement pstmt = connection.prepareStatement("INSERT INTO EMAIL VALUES (?, ?)");
 	
-		BufferedReader r = new BufferedReader(
-				new FileReader("/Users/dragon/data.txt"));
+		
+		// file read
+		BufferedReader r = new BufferedReader(new FileReader("/Users/dragon/data.txt"));
 		long pre = System.currentTimeMillis();
 		int cnt = 0;
 		
@@ -46,27 +47,28 @@ public class EmaillApp {
 				continue;
 			}
 			
-			String[] arr = line.split("\t");
+			String[] arr = line.split("\t"); // cur type string
 			int left = Integer.parseInt(arr[0]);
 			int right = Integer.parseInt(arr[1]);
 			
 			String sql = "INSERT INTO email VALUES("+left+", "+right+")";
-			//stmt.executeUpdate(sql); -> original
+			//stmt.executeUpdate(sql); //-> original, 117599ms
 			
 			
-			/* more faster codes..
-			pstmt.clearParameters();
-			pstmt.setInt(1, left);
-			pstmt.setInt(2, right);
-			pstmt.executeUpdate();
-			*/
+			// 117429ms
+			//pstmt.clearParameters();
+			//pstmt.setInt(1, left);
+			//pstmt.setInt(2, right);
+			//pstmt.executeUpdate();
 			
-			stmt.addBatch(sql); // even more faster ? throw the batch !
+			
+			stmt.addBatch(sql); // even more faster ? throw the batch ! fastest 93849 !
 		
 			System.out.println((System.currentTimeMillis() - pre) + ":" + ++cnt);
 			//System.out.println(left + " -> " + right);
 		}
 		stmt.executeBatch();
+		System.out.println((System.currentTimeMillis() - pre) + ":" + ++cnt); // batch check
 		
 		r.close();
 		stmt.close();

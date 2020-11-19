@@ -23,6 +23,7 @@ public class Application {
 		}
 		
 		Statement stmt = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+		
 		stmt.executeUpdate("CREATE OR REPLACE DATABASE DBPS");
 		stmt.executeUpdate("USE DBPS");
 		stmt.executeUpdate("CREATE OR REPLACE TABLE customer (NAME VARCHAR(50), CUSTOMER_ID INTEGER PRIMARY KEY, LAST_VISIT DATE)");
@@ -51,7 +52,7 @@ public class Application {
 		rs.updateInt(2, 35244);
 		rs.insertRow();
 		
-		
+
 		stmt.close();
 		connection.close();
 		
