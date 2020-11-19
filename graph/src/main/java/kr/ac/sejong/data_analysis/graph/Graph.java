@@ -22,7 +22,8 @@ public interface Graph {
 	 */
 	public Vertex getVertex(String id);
 
-	/**
+	/** indexing
+	 * 
 	 * Return an iterable to all the vertices in the graph. If this is not possible
 	 * for the implementation, then an UnsupportedOperationException can be thrown.
 	 *
@@ -44,6 +45,9 @@ public interface Graph {
 	public Iterable<Vertex> getVertices(String key, Object value);
 
 	/**
+	 * 
+	 * indexing
+	 * 
 	 * Add an edge to the graph. The added edges requires a recommended identifier,
 	 * a tail vertex, an head vertex, and a label. Like adding a vertex, the
 	 * provided object identifier may be ignored by the implementation.
@@ -65,6 +69,8 @@ public interface Graph {
 	public Edge getEdge(Vertex outVertex, Vertex inVertex, String label);
 
 	/**
+	 * indexing
+	 * 
 	 * Return an iterable to all the edges in the graph. If this is not possible for
 	 * the implementation, then an UnsupportedOperationException can be thrown.
 	 *
