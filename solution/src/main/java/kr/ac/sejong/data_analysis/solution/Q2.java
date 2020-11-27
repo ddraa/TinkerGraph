@@ -33,8 +33,7 @@ public class Q2 {
 		int cnt = 0;
 		long pre = System.currentTimeMillis();
 		for (Integer id : idSet) {
-			if (cnt++ == 100)
-				break;
+			
 			HashSet<Integer> receiverSet = new HashSet<Integer>();
 			ResultSet rset = stmt.executeQuery("SELECT DISTINCT destination FROM email WHERE source = " + id);
 			while (rset.next()) {
@@ -51,6 +50,8 @@ public class Q2 {
 	}
 	System.out.println("ET: " + (System.currentTimeMillis() - pre));
 	// ET: 23263
+	
+	// ET: 155267 all BTREE on source
 	stmt.close();
 	connection.close();
 }

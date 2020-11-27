@@ -20,7 +20,7 @@ public class Q1 {
 		stmt.executeUpdate("CREATE DATABASE IF NOT EXISTS dbp");
 		stmt.executeUpdate("USE dbp");
 		
-		stmt.executeUpdate("CREATE INDEX sourceidx on email (source)"); // INDEXING !!
+		stmt.executeUpdate("CREATE OR REPLACE INDEX idx ON email (source, destination) USING BTREE"); // INDEXING !!
 
 		// Step1
 		HashSet<Integer> idSet = new HashSet<Integer>();
