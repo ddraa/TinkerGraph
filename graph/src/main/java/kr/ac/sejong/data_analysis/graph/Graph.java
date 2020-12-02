@@ -90,4 +90,5 @@ public interface Graph {
 	 * @return an iterable of edges with provided key and value
 	 */
 	public Iterable<Edge> getEdges(String key, Object value);
+	
 }

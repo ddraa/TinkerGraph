@@ -15,14 +15,16 @@ public class Q2 {
 		Statement stmt = connection.createStatement();
 		stmt.executeUpdate("CREATE DATABASE IF NOT EXISTS dbp");
 		stmt.executeUpdate("USE dbp");
+		//stmt.executeUpdate("SET max_heap_table_size= 1024*1024*128");
+
 
 		// Step1
 		HashSet<Integer> idSet = new HashSet<Integer>();
-		ResultSet set = stmt.executeQuery("SELECT DISTINCT source from email");
+		ResultSet set = stmt.executeQuery("SELECT DISTINCT source from emailmem");
 		while (set.next()) {
 			idSet.add(set.getInt(1));
 		}
-		set = stmt.executeQuery("SELECT DISTINCT destination from email");
+		set = stmt.executeQuery("SELECT DISTINCT destination from emailmem");
 		while (set.next()) {
 			idSet.add(set.getInt(1));
 		}
@@ -35,13 +37,13 @@ public class Q2 {
 		for (Integer id : idSet) {
 			
 			HashSet<Integer> receiverSet = new HashSet<Integer>();
-			ResultSet rset = stmt.executeQuery("SELECT DISTINCT destination FROM email WHERE source = " + id);
+			ResultSet rset = stmt.executeQuery("SELECT DISTINCT destination FROM emailmem WHERE source = " + id);
 			while (rset.next()) {
 				receiverSet.add(rset.getInt(1));
 			}
 			HashSet<Integer> receiverSet2 = new HashSet<Integer>();
 			for (Integer r : receiverSet) {
-				ResultSet rset2 = stmt.executeQuery("SELECT DISTINCT destination FROM email WHERE source = " + r);
+				ResultSet rset2 = stmt.executeQuery("SELECT DISTINCT destination FROM emailmem WHERE source = " + r);
 				while (rset2.next()) {
 					receiverSet2.add(rset2.getInt(1));
 				}

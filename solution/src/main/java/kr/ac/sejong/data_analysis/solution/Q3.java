@@ -66,6 +66,8 @@ public class Q3 {
 			
 			
 			stmt.addBatch(sql); // even more faster ? throw the batch ! fastest 93849 !
+			
+			// in memory -> 10186.... most
 		
 			System.out.println((System.currentTimeMillis() - pre) + ":" + ++cnt);
 			//System.out.println(left + " -> " + right);
