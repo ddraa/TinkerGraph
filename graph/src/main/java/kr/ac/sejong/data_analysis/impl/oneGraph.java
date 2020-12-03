@@ -109,7 +109,7 @@ public class oneGraph implements Graph{
 			if (re.next() == false)
 				return null;
 		} catch (SQLException e) {
-			e.printStackTrace(); // not exist
+			e.printStackTrace();
 		}
 		return new oneEdge(outVertex, label, inVertex, this);
 	}
@@ -165,7 +165,7 @@ public class oneGraph implements Graph{
 	}
 	
 	@Override
-	public Iterable<Vertex> getVertices(String key, Object value) { //JSon
+	public Iterable<Vertex> getVertices(String key, Object value) {
 		List<Vertex> l = new ArrayList<>();
     	JSONObject job = null;
     	

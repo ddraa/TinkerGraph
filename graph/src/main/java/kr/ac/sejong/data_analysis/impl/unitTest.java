@@ -12,7 +12,7 @@ import kr.ac.sejong.data_analysis.graph.Edge;
 import kr.ac.sejong.data_analysis.graph.Graph;
 import kr.ac.sejong.data_analysis.graph.Vertex;
 
-public class App {
+public class unitTest {
 	
 	public static void doTest(Graph g) {
 		
@@ -58,7 +58,6 @@ public class App {
 		System.out.println(g.getVertex("7").getEdges(Direction.IN, "label"));
 		System.out.println(e128.getVertex(Direction.OUT));
 		System.out.println(e128.getVertex(Direction.IN));
-		
 	}
 	
 

@@ -39,6 +39,14 @@
 	    <artifactId>blueprints-core</artifactId>
 	    <version>2.6.0</version>
 	</dependency>
+	<!-- https://mvnrepository.com/artifact/org.apache.tinkerpop/tinkergraph-gremlin -->
+	<dependency>
+	    <groupId>org.apache.tinkerpop</groupId>
+	    <artifactId>tinkergraph-gremlin</artifactId>
+	    <version>3.4.8</version>
+	    <scope>test</scope>
+	</dependency>
+	
 	
 	<!-- https://mvnrepository.com/artifact/org.json/json -->
 	<dependency>

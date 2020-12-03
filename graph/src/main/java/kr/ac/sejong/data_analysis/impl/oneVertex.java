@@ -57,9 +57,7 @@ public class oneVertex implements Vertex {
 				
 			} catch (SQLException e) {
 				e.printStackTrace();
-			}
-    		// query among all edges inVertex.id = this.id and label = this.labels
-    		
+			}    		
     	}
     	else {
     		try {
@@ -75,7 +73,6 @@ public class oneVertex implements Vertex {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-    		// opposite
     	}
         return li;
     }
@@ -109,9 +106,7 @@ public class oneVertex implements Vertex {
 				
 			} catch (SQLException e) {
 				e.printStackTrace();
-			}
-    		// query among all edges inVertex.id = this.id and label = this.labels
-    		
+			}    		
     	}
     	else {
     		try {
@@ -127,14 +122,13 @@ public class oneVertex implements Vertex {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-    		// opposite
     	}
         return li;
     }
     
 
     @Override
-    public Edge addEdge(String label, Vertex inVertex) { //No exception handling
+    public Edge addEdge(String label, Vertex inVertex) {
 		Connection connection = this.graph.getConnection();
 		Statement stmt = null;
 		Edge ed = null;
@@ -159,7 +153,7 @@ public class oneVertex implements Vertex {
 			stmt = connection.createStatement();
 			ResultSet re = stmt.executeQuery("SELECT properties from vertex WHERE ID = "+this.id+" AND Properties IS NOT NULL");
 			if (re.next() == false) {
-				return null; // empty
+				return null;
 			}
 			else {
 				try {
@@ -188,7 +182,7 @@ public class oneVertex implements Vertex {
 			ResultSet re = stmt.executeQuery("SELECT properties from vertex WHERE ID = "+this.id+" AND Properties IS NOT NULL");
 			
 			if (re.next() == false) {
-				return null; // empty
+				return null; 
 			}
 			else {
 				try {

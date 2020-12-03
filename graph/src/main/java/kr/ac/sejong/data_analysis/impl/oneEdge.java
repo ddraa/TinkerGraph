@@ -46,7 +46,7 @@ public class oneEdge implements Edge {
 
 
     @Override
-    public Object getProperty(String key) { //JSon
+    public Object getProperty(String key) {
     	Statement stmt = null;
     	JSONObject job = null;
     	Connection connection = this.graph.getConnection();
@@ -55,7 +55,7 @@ public class oneEdge implements Edge {
 			ResultSet re = stmt.executeQuery("SELECT properties FROM edge WHERE OutVertex = "+out.getId()+" && "
 					+ "InVertex = "+in.getId()+" && label = '"+label+"' AND properties IS NOT NULL");
 			if (re.next() == false) {
-				return null; // empty
+				return null;
 			}
 			else {
 				try {
@@ -74,7 +74,7 @@ public class oneEdge implements Edge {
     }
 
     @Override
-    public Set<String> getPropertyKeys() { //JSon
+    public Set<String> getPropertyKeys() { 
     	Set<String> s = new HashSet<String>();
     	Statement stmt = null;
     	JSONObject job = null;
@@ -85,7 +85,7 @@ public class oneEdge implements Edge {
 					+ "InVertex = "+in.getId()+" && label = '"+label+"' AND properties IS NOT NULL");		
 			
 			if (re.next() == false) {
-				return null; // empty
+				return null; 
 			}
 			else {
 				try {
