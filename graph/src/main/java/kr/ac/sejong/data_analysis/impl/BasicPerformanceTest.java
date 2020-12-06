@@ -23,7 +23,7 @@ public class BasicPerformanceTest {
 				break;
 			if (line.startsWith("#"))
 				continue;
-			if(cnt++ == 5000)
+			if(cnt++ == 50000)
 				break;
 
 			String[] arr = line.split("\t");

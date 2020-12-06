@@ -22,6 +22,8 @@ public class oneVertex implements Vertex {
 
     private String id;
     private oneGraph graph;
+    Statement stmt = null;
+    ResultSet rs = null;
     
     public oneVertex(String id, oneGraph graph) {
     	this.id = id;
@@ -34,7 +36,6 @@ public class oneVertex implements Vertex {
     	List<Edge> li = new ArrayList<>();
     	
 		Connection connection = this.graph.getConnection();
-		Statement stmt = null;
 		
 		try {
 			stmt = connection.createStatement();
@@ -44,8 +45,10 @@ public class oneVertex implements Vertex {
 		}
 		
     	if (direction==Direction.IN) {
+    		
     		try {
-				ResultSet rs = stmt.executeQuery("SELECT * FROM edge WHERE InVertex = "+this.id+"");
+    			stmt.executeUpdate("CREATE OR REPLACE INDEX IDX ON edge (InVertex, OutVertex)");
+				rs = stmt.executeQuery("SELECT * FROM edge WHERE InVertex = "+this.id+"");
 				while (rs.next()) {
 					for (String s : labels) {
 						if (s.equals(rs.getString(3))) {
@@ -61,7 +64,8 @@ public class oneVertex implements Vertex {
     	}
     	else {
     		try {
-				ResultSet rs = stmt.executeQuery("SELECT * FROM edge WHERE OutVertex = "+this.id+"");
+    			stmt.executeUpdate("CREATE OR REPLACE INDEX IDX ON edge (OutVertex, InVertex)");
+				rs = stmt.executeQuery("SELECT * FROM edge WHERE OutVertex = "+this.id+"");
 				while (rs.next()) {
 					for (String s : labels) {
 						if (s.equals(rs.getString(3))) {
@@ -83,7 +87,6 @@ public class oneVertex implements Vertex {
     	List<Vertex> li = new ArrayList<>();
     	
 		Connection connection = this.graph.getConnection();
-		Statement stmt = null;
 		
 		try {
 			stmt = connection.createStatement();
@@ -94,7 +97,8 @@ public class oneVertex implements Vertex {
 		
     	if (direction==Direction.IN) {
     		try {
-				ResultSet rs = stmt.executeQuery("SELECT * FROM edge WHERE InVertex = "+this.id+"");
+    			stmt.executeUpdate("CREATE OR REPLACE INDEX IDX ON edge (InVertex, OutVertex)");
+				rs = stmt.executeQuery("SELECT * FROM edge WHERE InVertex = "+this.id+"");
 				while (rs.next()) {
 					for (String s : labels) {
 						if (s.equals(rs.getString(3))) {
@@ -110,7 +114,8 @@ public class oneVertex implements Vertex {
     	}
     	else {
     		try {
-				ResultSet rs = stmt.executeQuery("SELECT * FROM edge WHERE OutVertex = "+this.id+"");
+    			stmt.executeUpdate("CREATE OR REPLACE INDEX IDX ON edge (OutVertex, InVertex)");
+				rs = stmt.executeQuery("SELECT * FROM edge WHERE OutVertex = "+this.id+"");
 				while (rs.next()) {
 					for (String s : labels) {
 						if (s.equals(rs.getString(3))) {
@@ -130,7 +135,6 @@ public class oneVertex implements Vertex {
     @Override
     public Edge addEdge(String label, Vertex inVertex) {
 		Connection connection = this.graph.getConnection();
-		Statement stmt = null;
 		Edge ed = null;
 		
 		try {
@@ -146,7 +150,6 @@ public class oneVertex implements Vertex {
     
     @Override
     public Object getProperty(String key) {
-    	Statement stmt = null;
     	JSONObject job = null;
     	Connection connection = this.graph.getConnection();
     	try {
@@ -174,7 +177,6 @@ public class oneVertex implements Vertex {
     @Override
     public Set<String> getPropertyKeys() {
     	Set<String> s = new HashSet<String>();
-    	Statement stmt = null;
     	JSONObject job = null;
     	Connection connection = this.graph.getConnection();
     	try {
@@ -205,9 +207,19 @@ public class oneVertex implements Vertex {
 
     @Override
     public void setProperty(String key, Object value) {
-    	Statement stmt = null;
-    	JSONObject job = null;
     	Connection connection = this.graph.getConnection();
+    	JSONObject job = null;
+    	/*
+    	try {
+    		stmt = connection.createStatement();
+    		stmt.executeUpdate("insert into vertex values (" +this.id+ ", '{\"" +key+ "\":" +value+ "}') ON DUPLICATE KEY UPDATE properties = '{\"" +key+ "\":" +value+ "}' ");
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		*/
+    	
+    	
 		try {
 			stmt = connection.createStatement();
 			ResultSet re = stmt.executeQuery("SELECT properties from vertex WHERE ID = "+this.id+" AND properties IS NOT NULL");
@@ -233,6 +245,7 @@ public class oneVertex implements Vertex {
 			e.printStackTrace();
 		}
     }
+    
     
 
     @Override
