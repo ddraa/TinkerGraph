@@ -25,14 +25,14 @@ public class oneVertex implements Vertex {
     Statement stmt = null;
     ResultSet rs = null;
     
-    public oneVertex(String id, oneGraph graph) {
+    public oneVertex(String id, oneGraph graph) { // 이수린 
     	this.id = id;
     	this.graph = graph;
     }
     
 
     @Override
-    public Iterable<Edge> getEdges(Direction direction, String... labels) {
+    public Iterable<Edge> getEdges(Direction direction, String... labels) { // 송경용 
     	List<Edge> li = new ArrayList<>();
     	
 		Connection connection = this.graph.getConnection();
@@ -83,7 +83,7 @@ public class oneVertex implements Vertex {
 
     
     @Override 
-    public Iterable<Vertex> getVertices(Direction direction, String... labels) {
+    public Iterable<Vertex> getVertices(Direction direction, String... labels) { // 송경용 
     	List<Vertex> li = new ArrayList<>();
     	
 		Connection connection = this.graph.getConnection();
@@ -133,7 +133,7 @@ public class oneVertex implements Vertex {
     
 
     @Override
-    public Edge addEdge(String label, Vertex inVertex) {
+    public Edge addEdge(String label, Vertex inVertex) { // 김기백 
 		Connection connection = this.graph.getConnection();
 		Edge ed = null;
 		
@@ -149,7 +149,7 @@ public class oneVertex implements Vertex {
 
     
     @Override
-    public Object getProperty(String key) {
+    public Object getProperty(String key) { // 이지윤 
     	JSONObject job = null;
     	Connection connection = this.graph.getConnection();
     	try {
@@ -175,7 +175,7 @@ public class oneVertex implements Vertex {
     }
 
     @Override
-    public Set<String> getPropertyKeys() {
+    public Set<String> getPropertyKeys() { // 박채은 
     	Set<String> s = new HashSet<String>();
     	JSONObject job = null;
     	Connection connection = this.graph.getConnection();
@@ -206,19 +206,9 @@ public class oneVertex implements Vertex {
     }
 
     @Override
-    public void setProperty(String key, Object value) {
+    public void setProperty(String key, Object value) {  // 박채은 
     	Connection connection = this.graph.getConnection();
     	JSONObject job = null;
-    	/*
-    	try {
-    		stmt = connection.createStatement();
-    		stmt.executeUpdate("insert into vertex values (" +this.id+ ", '{\"" +key+ "\":" +value+ "}') ON DUPLICATE KEY UPDATE properties = '{\"" +key+ "\":" +value+ "}' ");
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
-		*/
-    	
     	
 		try {
 			stmt = connection.createStatement();
@@ -249,13 +239,13 @@ public class oneVertex implements Vertex {
     
 
     @Override
-	public String toString() {
+	public String toString() { // 이수린 
 		return "v["+this.id+"]";
 	}
 
 
 	@Override
-    public Object getId() {
+    public Object getId() { // 이지윤 
         return this.id;
     }
 }

@@ -23,7 +23,7 @@ public class oneGraph implements Graph{
 	private Statement stmt = null;
 	ResultSet rs = null;
 
-	public oneGraph() throws SQLException {
+	public oneGraph() throws SQLException { // 이지윤 
 		
 		connection = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306", "root", "1234");
 		stmt = connection.createStatement();
@@ -37,13 +37,13 @@ public class oneGraph implements Graph{
 
 	}
 	
-	public Connection getConnection() {
+	public Connection getConnection() { // 김기백 
 		return this.connection;
 	}
 	
 	
 	@Override
-	public Vertex addVertex(String id) {
+	public Vertex addVertex(String id) { // 이수린 
 		try {
 			stmt.executeUpdate("INSERT INTO vertex (id) VALUES ("+ id +")");
 		} catch (SQLException e) {
@@ -54,7 +54,7 @@ public class oneGraph implements Graph{
 
 	
 	@Override
-	public Vertex getVertex(String id) {		
+	public Vertex getVertex(String id) { // 이수린 
 		try {
 			rs = stmt.executeQuery("SELECT ID FROM vertex WHERE id=" + id + "");
 			if (rs.next() == false)
@@ -67,7 +67,7 @@ public class oneGraph implements Graph{
 	
 
 	@Override
-	public Iterable<Vertex> getVertices() {
+	public Iterable<Vertex> getVertices() { // 이지윤 
 		
 		List<Vertex> l = new ArrayList<>();
 		try {
@@ -85,7 +85,7 @@ public class oneGraph implements Graph{
 
 
 	@Override
-	public Edge addEdge(Vertex outVertex, Vertex inVertex, String label) {
+	public Edge addEdge(Vertex outVertex, Vertex inVertex, String label) { // 송경용 
 		try {
 			rs = stmt.executeQuery("SELECT * FROM edge WHERE OutVertex = "+outVertex.getId()+" && "
 					+ "InVertex = "+inVertex.getId()+" && label = '"+label+"'");
@@ -104,7 +104,7 @@ public class oneGraph implements Graph{
 	}
 
 	@Override
-	public Edge getEdge(Vertex outVertex, Vertex inVertex, String label) {
+	public Edge getEdge(Vertex outVertex, Vertex inVertex, String label) { // 송경용 
 		try {
 			rs = stmt.executeQuery("SELECT * FROM edge WHERE OutVertex = "+outVertex.getId()+" && "
 					+ "InVertex = "+inVertex.getId()+" && label = "+label+"");
@@ -118,7 +118,7 @@ public class oneGraph implements Graph{
 	
 
 	@Override
-	public Iterable<Edge> getEdges() {
+	public Iterable<Edge> getEdges() { // 김기백 
 		List<Edge> l = new ArrayList<>();
 		try {
 			rs = stmt.executeQuery("SELECT * FROM edge");
@@ -137,7 +137,7 @@ public class oneGraph implements Graph{
 	
 
 	@Override
-	public Iterable<Edge> getEdges(String key, Object value) { 
+	public Iterable<Edge> getEdges(String key, Object value) { // 박채은
 		List<Edge> l = new ArrayList<>();
 		try {
 			rs = stmt.executeQuery("SELECT * FROM edge where json_value(properties, '$."+key+"')="+value);
@@ -152,7 +152,7 @@ public class oneGraph implements Graph{
 	
 	
 	@Override
-	public Iterable<Vertex> getVertices(String key, Object value) {
+	public Iterable<Vertex> getVertices(String key, Object value) { // 박채은
 		List<Vertex> l = new ArrayList<>();
     	
 		try {

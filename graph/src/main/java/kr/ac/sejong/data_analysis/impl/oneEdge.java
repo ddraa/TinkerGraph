@@ -28,7 +28,7 @@ public class oneEdge implements Edge {
     ResultSet rs = null;
 
     
-    public oneEdge(Vertex out, String label, Vertex in, oneGraph graph) {
+    public oneEdge(Vertex out, String label, Vertex in, oneGraph graph) { // 이수린 
     	this.out = out;
     	this.label = label;
     	this.in = in;
@@ -37,7 +37,7 @@ public class oneEdge implements Edge {
     }
 
     @Override
-    public Vertex getVertex(Direction direction) throws IllegalArgumentException {
+    public Vertex getVertex(Direction direction) throws IllegalArgumentException { // 송경용 
 		
     	if (direction == Direction.IN) {
     		return this.in;
@@ -49,7 +49,7 @@ public class oneEdge implements Edge {
 
 
     @Override
-    public Object getProperty(String key) {
+    public Object getProperty(String key) { // 박채은 
     	JSONObject job = null;
     	Connection connection = this.graph.getConnection();
     	try {
@@ -76,7 +76,7 @@ public class oneEdge implements Edge {
     }
 
     @Override
-    public Set<String> getPropertyKeys() { 
+    public Set<String> getPropertyKeys() { // 박채은 
     	Set<String> s = new HashSet<String>();
     	JSONObject job = null;
     	Connection connection = this.graph.getConnection();
@@ -108,7 +108,7 @@ public class oneEdge implements Edge {
     }
 
     @Override
-    public void setProperty(String key, Object value) {
+    public void setProperty(String key, Object value) { // 송경용 
     	JSONObject job = null;
     	Connection connection = this.graph.getConnection();
 		try {
@@ -140,17 +140,17 @@ public class oneEdge implements Edge {
     
     
     @Override
-	public String toString() {
+	public String toString() { // 김기백 
 		return "e["+out.getId()+"-"+label+"->"+in.getId()+"]";
 	}
 
 	@Override
-    public String getLabel() {
+    public String getLabel() { // 김기백 
         return this.label;
     }
 
     @Override
-    public Object getId() {
+    public Object getId() { // 이지윤 
         return this.id;
     }
 }

@@ -16,18 +16,11 @@ public class unitTest {
 	
 	public static void doTest(Graph g) {
 		
-		long p = System.currentTimeMillis();
-
-		for (int i = 0; i < 5000; i++) {
+		for (int i = 0; i < 13; i++) {
 			Vertex v = g.addVertex(String.valueOf(i));
 			v.setProperty("key1", String.valueOf(i));
-			if (i == 4999) {
-				v.setProperty("key2", "1234");
-			}
 		}
 		
-		System.out.println("Vertex Creation (ms.): " + (System.currentTimeMillis() - p));
-
 		Edge e01 = g.addEdge(g.getVertex("0"), g.getVertex("1"), "label");
 		e01.setProperty("key1", 0 + 1);
 		Edge e02 = g.addEdge(g.getVertex("0"), g.getVertex("2"), "label");
