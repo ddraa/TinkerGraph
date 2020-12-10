@@ -24,8 +24,9 @@ public class TraversalTest {
 				break;
 			if (line.startsWith("#"))
 				continue;
-			if (cnt == 50)
-				break;
+			if (cnt == 10000)
+				return;
+			
 			String[] arr = line.split("\t");
 
 			Vertex vl = g.getVertex(arr[0]);
@@ -91,5 +92,6 @@ public class TraversalTest {
 		System.out.println("RV (ms.): " + (System.currentTimeMillis() - p));
 		//RV (ms.): 93792 
 		//RV : 249081
+		//RV : 247855
 	}
 }

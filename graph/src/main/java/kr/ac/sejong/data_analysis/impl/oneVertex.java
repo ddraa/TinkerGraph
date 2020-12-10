@@ -48,14 +48,9 @@ public class oneVertex implements Vertex {
     		
     		try {
     			stmt.executeUpdate("CREATE OR REPLACE INDEX IDX ON edge (InVertex, OutVertex)");
-				rs = stmt.executeQuery("SELECT * FROM edge WHERE InVertex = "+this.id+"");
+				rs = stmt.executeQuery("SELECT OutVertex, InVertex FROM edge WHERE InVertex = "+this.id+" && label = "+labels[0]+"");
 				while (rs.next()) {
-					for (String s : labels) {
-						if (s.equals(rs.getString(3))) {
-							li.add(new oneEdge(new oneVertex(rs.getString(1), this.graph), s, new oneVertex(rs.getString(2), this.graph), this.graph));
-							break;
-						}
-					}
+					li.add(new oneEdge(new oneVertex(rs.getString(1), this.graph), labels[0], new oneVertex(rs.getString(2), this.graph), this.graph));
 				}
 				
 			} catch (SQLException e) {
@@ -65,14 +60,9 @@ public class oneVertex implements Vertex {
     	else {
     		try {
     			stmt.executeUpdate("CREATE OR REPLACE INDEX IDX ON edge (OutVertex, InVertex)");
-				rs = stmt.executeQuery("SELECT * FROM edge WHERE OutVertex = "+this.id+"");
+				rs = stmt.executeQuery("SELECT OutVertex, InVertex FROM edge WHERE OutVertex = "+this.id+" && label = "+labels[0]+"");
 				while (rs.next()) {
-					for (String s : labels) {
-						if (s.equals(rs.getString(3))) {
-							li.add(new oneEdge(new oneVertex(rs.getString(1), this.graph), s, new oneVertex(rs.getString(2), this.graph), this.graph));
-							break;
-						}
-					}
+					li.add(new oneEdge(new oneVertex(rs.getString(1), this.graph), labels[0], new oneVertex(rs.getString(2), this.graph), this.graph));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -98,14 +88,9 @@ public class oneVertex implements Vertex {
     	if (direction==Direction.IN) {
     		try {
     			stmt.executeUpdate("CREATE OR REPLACE INDEX IDX ON edge (InVertex, OutVertex)");
-				rs = stmt.executeQuery("SELECT * FROM edge WHERE InVertex = "+this.id+"");
+				rs = stmt.executeQuery("SELECT OutVertex FROM edge WHERE InVertex = "+this.id+" && label = "+labels[0]+"");
 				while (rs.next()) {
-					for (String s : labels) {
-						if (s.equals(rs.getString(3))) {
-							li.add(new oneVertex(rs.getString(1), this.graph));
-							break;
-						}
-					}
+					li.add(new oneVertex(rs.getString(1), this.graph));
 				}
 				
 			} catch (SQLException e) {
@@ -115,14 +100,9 @@ public class oneVertex implements Vertex {
     	else {
     		try {
     			stmt.executeUpdate("CREATE OR REPLACE INDEX IDX ON edge (OutVertex, InVertex)");
-				rs = stmt.executeQuery("SELECT * FROM edge WHERE OutVertex = "+this.id+"");
+				rs = stmt.executeQuery("SELECT InVertex FROM edge WHERE OutVertex = "+this.id+" && label = "+labels[0]+"");
 				while (rs.next()) {
-					for (String s : labels) {
-						if (s.equals(rs.getString(3))) {
-							li.add(new oneVertex(rs.getString(2), this.graph));
-							break;
-						}
-					}
+					li.add(new oneVertex(rs.getString(1), this.graph));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -235,7 +215,6 @@ public class oneVertex implements Vertex {
 			e.printStackTrace();
 		}
     }
-    
     
 
     @Override

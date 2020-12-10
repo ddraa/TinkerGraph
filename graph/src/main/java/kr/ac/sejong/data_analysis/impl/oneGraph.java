@@ -121,13 +121,9 @@ public class oneGraph implements Graph{
 	public Iterable<Edge> getEdges() { // 김기백 
 		List<Edge> l = new ArrayList<>();
 		try {
-			rs = stmt.executeQuery("SELECT * FROM edge");
+			rs = stmt.executeQuery("SELECT OutVertex, InVertex, label FROM edge");
 			while (rs.next()) {
-				String out = rs.getString(1);
-				String in = rs.getString(2);
-				String label = rs.getString(3);
-				Edge e = new oneEdge(new oneVertex(out, this), label, new oneVertex(in, this), this);
-				l.add(e);
+				l.add(new oneEdge(new oneVertex(rs.getString(1), this), rs.getString(3), new oneVertex(rs.getString(2), this), this));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -140,7 +136,7 @@ public class oneGraph implements Graph{
 	public Iterable<Edge> getEdges(String key, Object value) { // 박채은
 		List<Edge> l = new ArrayList<>();
 		try {
-			rs = stmt.executeQuery("SELECT * FROM edge where json_value(properties, '$."+key+"')="+value);
+			rs = stmt.executeQuery("SELECT OutVertex, InVertex, label FROM edge where json_value(properties, '$."+key+"')="+value);
 			while (rs.next()) {
 				l.add(new oneEdge(new oneVertex(rs.getString(1), this), rs.getString(3), new oneVertex(rs.getString(2), this), this));
 			}
@@ -156,7 +152,7 @@ public class oneGraph implements Graph{
 		List<Vertex> l = new ArrayList<>();
     	
 		try {
-			rs = stmt.executeQuery("SELECT * FROM vertex where json_value(properties, '$."+key+"')="+value);
+			rs = stmt.executeQuery("SELECT ID FROM vertex where json_value(properties, '$."+key+"')="+value);
 			while (rs.next()) {
 				l.add(new oneVertex(rs.getString(1), this));
 			}

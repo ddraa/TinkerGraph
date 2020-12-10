@@ -16,13 +16,15 @@ public class BasicPerformanceTest {
 	
 	public static void createGraph(Graph g) throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader("/Users/dragon/rdata.txt"));
-		//int cnt = 0;
+		int cnt = 0;
 		while (true) {
 			String line = br.readLine();
 			if (line == null)
 				break;
 			if (line.startsWith("#"))
 				continue;
+			if (cnt++ == 50000)
+				return;
 
 			String[] arr = line.split("\t");
 
@@ -36,7 +38,7 @@ public class BasicPerformanceTest {
 			}
 
 			g.addEdge(vl, vr, "label");
-			//System.out.println(cnt++);
+			System.out.println(cnt);
 		}
 		br.close();
 	}
