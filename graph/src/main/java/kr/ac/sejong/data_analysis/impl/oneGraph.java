@@ -56,6 +56,7 @@ public class oneGraph implements Graph{
 	@Override
 	public Vertex getVertex(String id) { // 이수린 
 		try {
+			stmt.executeUpdate("CREATE OR REPLACE INDEX IDX ON vertex (ID)");
 			rs = stmt.executeQuery("SELECT ID FROM vertex WHERE id=" + id + "");
 			if (rs.next() == false)
 				return null;
@@ -71,6 +72,7 @@ public class oneGraph implements Graph{
 		
 		List<Vertex> l = new ArrayList<>();
 		try {
+			stmt.executeUpdate("CREATE OR REPLACE INDEX IDX ON vertex (ID)");
 			rs = stmt.executeQuery("SELECT ID FROM vertex");
 			
 			while (rs.next()) {
@@ -106,6 +108,7 @@ public class oneGraph implements Graph{
 	@Override
 	public Edge getEdge(Vertex outVertex, Vertex inVertex, String label) { // 송경용 
 		try {
+			stmt.executeUpdate("CREATE OR REPLACE INDEX IDX ON edge (OutVertex, InVertex)");
 			rs = stmt.executeQuery("SELECT * FROM edge WHERE OutVertex = "+outVertex.getId()+" && "
 					+ "InVertex = "+inVertex.getId()+" && label = "+label+"");
 			if (rs.next() == false)
@@ -121,6 +124,7 @@ public class oneGraph implements Graph{
 	public Iterable<Edge> getEdges() { // 김기백 
 		List<Edge> l = new ArrayList<>();
 		try {
+			stmt.executeUpdate("CREATE OR REPLACE INDEX IDX ON edge (OutVertex, InVertex)");
 			rs = stmt.executeQuery("SELECT OutVertex, InVertex, label FROM edge");
 			while (rs.next()) {
 				l.add(new oneEdge(new oneVertex(rs.getString(1), this), rs.getString(3), new oneVertex(rs.getString(2), this), this));
@@ -161,5 +165,4 @@ public class oneGraph implements Graph{
 		}
 		return l;
 	}
-
 }

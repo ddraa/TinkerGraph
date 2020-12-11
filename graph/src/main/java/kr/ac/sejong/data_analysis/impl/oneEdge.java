@@ -26,6 +26,7 @@ public class oneEdge implements Edge {
     private oneGraph graph;
     Statement stmt = null;
     ResultSet rs = null;
+    Connection connection = null;
 
     
     public oneEdge(Vertex out, String label, Vertex in, oneGraph graph) { // 이수린 
@@ -34,6 +35,7 @@ public class oneEdge implements Edge {
     	this.in = in;
     	this.id = (String)out.getId() + '|' + label + '|' + in.getId();
     	this.graph = graph;
+    	this.connection = this.graph.getConnection();
     }
 
     @Override
@@ -51,7 +53,6 @@ public class oneEdge implements Edge {
     @Override
     public Object getProperty(String key) { // 박채은 
     	JSONObject job = null;
-    	Connection connection = this.graph.getConnection();
     	try {
 			stmt = connection.createStatement();
 			rs = stmt.executeQuery("SELECT properties FROM edge WHERE OutVertex = "+out.getId()+" && "
@@ -79,7 +80,6 @@ public class oneEdge implements Edge {
     public Set<String> getPropertyKeys() { // 박채은 
     	Set<String> s = new HashSet<String>();
     	JSONObject job = null;
-    	Connection connection = this.graph.getConnection();
     	try {
 			stmt = connection.createStatement();
 			rs = stmt.executeQuery("SELECT properties FROM edge WHERE OutVertex = "+out.getId()+" && "
@@ -110,7 +110,6 @@ public class oneEdge implements Edge {
     @Override
     public void setProperty(String key, Object value) { // 송경용 
     	JSONObject job = null;
-    	Connection connection = this.graph.getConnection();
 		try {
 			stmt = connection.createStatement();
 			rs = stmt.executeQuery("SELECT properties FROM edge WHERE OutVertex = "+out.getId()+" && "

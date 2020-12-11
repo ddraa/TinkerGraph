@@ -24,48 +24,41 @@ public class oneVertex implements Vertex {
     private oneGraph graph;
     Statement stmt = null;
     ResultSet rs = null;
+    Connection connection=null;
     
     public oneVertex(String id, oneGraph graph) { // 이수린 
     	this.id = id;
     	this.graph = graph;
+    	this.connection = this.graph.getConnection();
     }
     
 
     @Override
     public Iterable<Edge> getEdges(Direction direction, String... labels) { // 송경용 
     	List<Edge> li = new ArrayList<>();
-    	
-		Connection connection = this.graph.getConnection();
-		
+    			
 		try {
 			stmt = connection.createStatement();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-			return null;
-		}
-		
-    	if (direction==Direction.IN) {
-    		try {
+			if (direction==Direction.IN) {
     			stmt.executeUpdate("CREATE OR REPLACE INDEX IDX ON edge (InVertex, OutVertex)");
 				rs = stmt.executeQuery("SELECT OutVertex FROM edge WHERE InVertex = "+this.id+" && label = "+labels[0]+"");
 				while (rs.next()) {
 					li.add(new oneEdge(new oneVertex(rs.getString(1), this.graph), labels[0], this, this.graph));
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}    		
-    	}
-    	else {
-    		try {
+				}	
+	    	}
+			else {
     			stmt.executeUpdate("CREATE OR REPLACE INDEX IDX ON edge (OutVertex, InVertex)");
 				rs = stmt.executeQuery("SELECT InVertex FROM edge WHERE OutVertex = "+this.id+" && label = "+labels[0]+"");
 				while (rs.next()) {
 					li.add(new oneEdge(this, labels[0], new oneVertex(rs.getString(1), this.graph), this.graph));
 				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-    	}
+	    	}
+			
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+			return null;
+		}
+		
         return li;
     }
 
@@ -73,9 +66,7 @@ public class oneVertex implements Vertex {
     @Override 
     public Iterable<Vertex> getVertices(Direction direction, String... labels) { // 송경용 
     	List<Vertex> li = new ArrayList<>();
-    	
-		Connection connection = this.graph.getConnection();
-		
+    			
 		try {
 			stmt = connection.createStatement();
 			if (direction==Direction.IN) {
@@ -99,7 +90,6 @@ public class oneVertex implements Vertex {
 
     @Override
     public Edge addEdge(String label, Vertex inVertex) { // 김기백 
-		Connection connection = this.graph.getConnection();
 		Edge ed = null;
 		
 		try {
@@ -116,7 +106,6 @@ public class oneVertex implements Vertex {
     @Override
     public Object getProperty(String key) { // 이지윤 
     	JSONObject job = null;
-    	Connection connection = this.graph.getConnection();
     	try {
 			stmt = connection.createStatement();
 			ResultSet re = stmt.executeQuery("SELECT properties from vertex WHERE ID = "+this.id+" AND Properties IS NOT NULL");
@@ -143,7 +132,6 @@ public class oneVertex implements Vertex {
     public Set<String> getPropertyKeys() { // 박채은 
     	Set<String> s = new HashSet<String>();
     	JSONObject job = null;
-    	Connection connection = this.graph.getConnection();
     	try {
 			stmt = connection.createStatement();
 			ResultSet re = stmt.executeQuery("SELECT properties from vertex WHERE ID = "+this.id+" AND Properties IS NOT NULL");
@@ -172,7 +160,6 @@ public class oneVertex implements Vertex {
 
     @Override
     public void setProperty(String key, Object value) {  // 박채은 
-    	Connection connection = this.graph.getConnection();
     	JSONObject job = null;
     	
 		try {

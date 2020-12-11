@@ -13,7 +13,7 @@ import kr.ac.sejong.data_analysis.graph.Direction;
 import kr.ac.sejong.data_analysis.graph.Graph;
 import kr.ac.sejong.data_analysis.graph.Vertex;
 
-public class TraversalTest {
+public class TraversalTest { // Team 1
 
 	public static void createGraph(Graph g) throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader("/Users/dragon/rdata.txt"));
